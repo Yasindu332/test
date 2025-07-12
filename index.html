@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f8b500, #fceabb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+      animation: bounce 1s infinite alternate;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      color: #333;
+    }
+
+    input {
+      padding: 12px;
+      width: 80%;
+      font-size: 16px;
+      border: 2px solid #f8b500;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: #f8b500;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #d99b00;
+    }
+
+    #output {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #555;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <img class="icon" src="https://cdn-icons-png.flaticon.com/512/3128/3128313.png" alt="welcome icon">
+    <h1>Welcome!</h1>
+    <input type="text" id="nameInput" placeholder="Enter your name" />
+    <br>
+    <button onclick="greet()">Say Hello</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    function greet() {
+      const name = document.getElementById("nameInput").value.trim();
+      const output = document.getElementById("output");
+      if(name){
+        output.innerText = `🎉 Hello, ${name}! Welcome to our web app! 🎈`;
+      } else {
+        output.innerText = "Please enter your name 😅";
+      }
+    }
+  </script>
+
+</body>
+</html>
