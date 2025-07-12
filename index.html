@@ -1,393 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Graphics Web App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+    body {
+      background: linear-gradient(to right top, #5f72be, #9b23ea);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-        }
+    header {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            font-weight: 300;
-        }
+    main {
+      flex: 1;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
 
-        .form-group {
-            margin-bottom: 25px;
-        }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
+    .card:hover {
+      transform: translateY(-8px);
+    }
 
-        input[type="text"], textarea, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e1e1;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
+    .card h2 {
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
 
-        input[type="text"]:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+    .card p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #ffffff22;
+      color: white;
+      border: 2px solid white;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-        .row {
-            display: flex;
-            gap: 20px;
-        }
+    button:hover {
+      background: white;
+      color: #5f72be;
+    }
 
-        .row .form-group {
-            flex: 1;
-        }
-
-        input[type="color"] {
-            width: 60px;
-            height: 40px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e1e1;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s;
-            width: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            margin-top: 10px;
-        }
-
-        .flash-messages {
-            margin-bottom: 20px;
-        }
-
-        .flash-error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #f5c6cb;
-        }
-
-        .flash-success {
-            background: #d4edda;
-            color: #155724;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #c3e6cb;
-        }
-
-        .navigation {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .nav-link {
-            color: #667eea;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: #764ba2;
-        }
-
-        .result-container {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .qr-image {
-            max-width: 100%;
-            height: auto;
-            border: 2px solid #e1e1e1;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-
-        .batch-container {
-            margin-top: 30px;
-        }
-
-        .batch-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .batch-item img {
-            width: 80px;
-            height: 80px;
-            margin-right: 15px;
-            border-radius: 4px;
-        }
-
-        .batch-info {
-            flex: 1;
-        }
-
-        .batch-info h4 {
-            margin: 0 0 5px 0;
-            color: #333;
-        }
-
-        .batch-info p {
-            margin: 0;
-            color: #666;
-            word-break: break-all;
-        }
-
-        @media (max-width: 768px) {
-            .row {
-                flex-direction: column;
-                gap: 0;
-            }
-            
-            .batch-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .batch-item img {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-        }
-    </style>
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      background: rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Navigation -->
-        <div class="navigation">
-            <a href="/" class="nav-link">Single QR</a>
-            <a href="/batch" class="nav-link">Batch Generator</a>
-        </div>
+  <header>
+    🚀 Advanced Graphics Web App
+  </header>
 
-        <!-- Flash Messages -->
-        <div class="flash-messages">
-            <!-- Flask flash messages would go here -->
-        </div>
-
-        <!-- Main Content -->
-        <div id="main-content">
-            <!-- Single QR Generator -->
-            <div id="single-generator">
-                <h1>QR Code Generator</h1>
-                
-                <form method="POST" action="/generate">
-                    <div class="form-group">
-                        <label for="data">Enter text, URL, or any data:</label>
-                        <textarea id="data" name="data" placeholder="Enter your text, URL, or any data here..." required></textarea>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="error_correction">Error Correction:</label>
-                            <select id="error_correction" name="error_correction">
-                                <option value="L">Low (7%)</option>
-                                <option value="M" selected>Medium (15%)</option>
-                                <option value="Q">Quartile (25%)</option>
-                                <option value="H">High (30%)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="style">Style:</label>
-                            <select id="style" name="style">
-                                <option value="square" selected>Square</option>
-                                <option value="rounded">Rounded</option>
-                                <option value="circle">Circle</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="fill_color">Fill Color:</label>
-                            <input type="color" id="fill_color" name="fill_color" value="#000000">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="back_color">Background Color:</label>
-                            <input type="color" id="back_color" name="back_color" value="#FFFFFF">
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="box_size">Box Size:</label>
-                            <input type="number" id="box_size" name="box_size" value="10" min="1" max="20">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="border">Border:</label>
-                            <input type="number" id="border" name="border" value="4" min="1" max="20">
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn">Generate QR Code</button>
-                </form>
-            </div>
-
-            <!-- Batch Generator -->
-            <div id="batch-generator" style="display: none;">
-                <h1>Batch QR Code Generator</h1>
-                
-                <form method="POST" action="/generate_batch">
-                    <div class="form-group">
-                        <label for="batch_data">Enter multiple items (one per line):</label>
-                        <textarea id="batch_data" name="batch_data" placeholder="Enter each item on a new line:&#10;https://example.com&#10;Hello World&#10;Contact: +1234567890" style="min-height: 150px;" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn">Generate Batch QR Codes</button>
-                </form>
-            </div>
-
-            <!-- Result Display -->
-            <div id="result-display" style="display: none;">
-                <div class="result-container">
-                    <h2>Your QR Code</h2>
-                    <img id="qr-image" class="qr-image" src="" alt="Generated QR Code">
-                    <div>
-                        <p><strong>Original Data:</strong> <span id="original-data"></span></p>
-                        <button class="btn" onclick="downloadQR()">Download QR Code</button>
-                        <button class="btn btn-secondary" onclick="goBack()">Generate Another</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Batch Results -->
-            <div id="batch-results" style="display: none;">
-                <h2>Generated QR Codes</h2>
-                <div id="batch-container" class="batch-container">
-                    <!-- Batch results will be populated here -->
-                </div>
-                <button class="btn btn-secondary" onclick="goBack()">Generate More</button>
-            </div>
-        </div>
+  <main>
+    <div class="card">
+      <h2>📱 Mobile Ready</h2>
+      <p>This app is fully responsive and works great on all devices including smartphones and tablets.</p>
+      <button onclick="alert('Mobile Ready!')">Check</button>
     </div>
 
-    <script>
-        // Navigation handling
-        function showSingleGenerator() {
-            document.getElementById('single-generator').style.display = 'block';
-            document.getElementById('batch-generator').style.display = 'none';
-            document.getElementById('result-display').style.display = 'none';
-            document.getElementById('batch-results').style.display = 'none';
-        }
+    <div class="card">
+      <h2>🎨 Stylish UI</h2>
+      <p>Designed with vibrant colors, smooth shadows, and interactive effects for a modern look and feel.</p>
+      <button onclick="alert('Stylish UI!')">View</button>
+    </div>
 
-        function showBatchGenerator() {
-            document.getElementById('single-generator').style.display = 'none';
-            document.getElementById('batch-generator').style.display = 'block';
-            document.getElementById('result-display').style.display = 'none';
-            document.getElementById('batch-results').style.display = 'none';
-        }
+    <div class="card">
+      <h2>⚙️ Interactive</h2>
+      <p>JavaScript integration allows dynamic responses, form handling, and logic processing.</p>
+      <button onclick="alert('Interactivity Works!')">Test</button>
+    </div>
+  </main>
 
-        // Handle navigation links
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const href = this.getAttribute('href');
-                    
-                    if (href === '/') {
-                        showSingleGenerator();
-                    } else if (href === '/batch') {
-                        showBatchGenerator();
-                    }
-                });
-            });
-        });
-
-        // Demo functions for the interface
-        function goBack() {
-            showSingleGenerator();
-        }
-
-        function downloadQR() {
-            // This would be handled by the Flask backend
-            alert('Download functionality would be implemented in the Flask backend');
-        }
-
-        // Show demo result
-        function showDemoResult() {
-            document.getElementById('single-generator').style.display = 'none';
-            document.getElementById('result-display').style.display = 'block';
-            
-            // Demo QR code (you would replace this with actual generated QR code)
-            document.getElementById('qr-image').src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
-            document.getElementById('original-data').textContent = 'Demo Data';
-        }
-
-        // Add demo functionality to the form
-        document.querySelector('form[action="/generate"]').addEventListener('submit', function(e) {
-            e.preventDefault();
-            showDemoResult();
-        });
-    </script>
+  <footer>
+    &copy; 2025 Developed by Yasindu. All rights reserved.
+  </footer>
 </body>
 </html>
